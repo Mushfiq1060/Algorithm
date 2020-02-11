@@ -71,6 +71,7 @@ int main()
         cout<<"no cycle"<<endl;
     else
     {
+        cout<<"Cycle found"<<endl;
         stack<int>cycle;
         cycle.push(m);
         m=parent[m];
