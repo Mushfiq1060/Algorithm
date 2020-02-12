@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 #define ll long long
-#define mod 17
+#define mod 1000000007
 using namespace std;
 ll Bigmod(ll x,ll y)
 {
