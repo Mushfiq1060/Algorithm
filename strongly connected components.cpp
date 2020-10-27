@@ -1,46 +1,85 @@
-///Directed graph
+/**
+strongly connected components are used in directed graph
+**/
 
 #include<bits/stdc++.h>
 using namespace std;
-vector<int>graph[1010],rev_graph[1010],arr;
-int component[1010];
-bool vis[1010];
-void dfs(int node)
+const int mxn=1050;
+vector<int>graph[mxn],rev_graph[mxn],comp;
+bool vis[mxn];
+stack<int>st;
+void dfs(int src)
 {
-    vis[node]=1;
-    for(int i=0;i<graph[node].size();i++)
-        if(!vis[graph[node][i]])
-            dfs(graph[node][i]);
-    arr.push_back(node);
+    vis[src]=1;
+    for(int i=0;i<graph[src].size();i++)
+        if(!vis[graph[src][i]])
+            dfs(graph[src][i]);
+    st.push(src);
 }
-void dfs2(int node,int cn)
+void rev_dfs(int src)
 {
-    vis[node]=1;
-    component[node]=cn;
-    for(int i=0;i<rev_graph[node].size();i++)
-        if(!vis[rev_graph[node][i]])
-            dfs2(rev_graph[node][i],cn);
+    vis[src]=1;
+    comp.push_back(src);
+    for(int i=0;i<rev_graph[src].size();i++)
+        if(!vis[rev_graph[src][i]])
+            rev_dfs(rev_graph[src][i]);
 }
 int main()
 {
-    int node,edge,u,v;
+    int node,edge;
     cin>>node>>edge;
     for(int i=0;i<edge;i++)
     {
+        int u,v;
         cin>>u>>v;
         graph[u].push_back(v);
         rev_graph[v].push_back(u);
     }
     memset(vis,0,sizeof vis);
-    for(int i=1;i<=node;i++)
+    for(int i=0;i<node;i++)
         if(!vis[i])
             dfs(i);
     memset(vis,0,sizeof vis);
-    int cn=0;
-    for(int i=arr.size()-1;i>=0;i--)
-        if(!vis[arr[i]])
-            dfs2(arr[i],++cn);
-    for(int i=1;i<=node;i++)
-        cout<<i<<"  :  "<<component[i]<<endl;
+    while(!st.empty())
+    {
+        int val=st.top();
+        st.pop();
+        if(!vis[val])
+        {
+            rev_dfs(val);
+            cout<<val;
+            for(int i=comp.size()-1;i>=0;i--)
+                cout<<" -> "<<comp[i];
+            cout<<endl;
+        }
+        comp.clear();
+    }
+    memset(vis,0,sizeof vis);
     return 0;
 }
+
+/**
+input: 
+11 13
+1 0
+0 2
+2 1
+0 3
+3 5
+5 4
+4 3
+6 4
+6 7
+7 8
+8 9
+9 6
+9 10
+
+
+
+output:
+6 -> 7 -> 8 -> 9 -> 6
+10 -> 10
+0 -> 2 -> 1 -> 0
+3 -> 5 -> 4 -> 3
+**/
