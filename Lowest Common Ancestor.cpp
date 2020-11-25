@@ -1,3 +1,6 @@
+/**Using Segment Tree**/
+/**LCA of node u,v is the minimum height node from root in simple path from u to v**/
+
 #include<bits/stdc++.h>
 #define ll long long 
 using namespace std;
