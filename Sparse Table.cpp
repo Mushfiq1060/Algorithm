@@ -1,3 +1,6 @@
+/** Sparse Table using for Range minimum query**/
+/**Time complexity -> O(nlog(n)) for building sparse table and O(1) for per query... n is the size of array**/
+
 #include<bits/stdc++.h>
 #define ll long long 
 using namespace std;
@@ -25,7 +28,6 @@ int main()
     **/
    
    /** Print Sparse Table**/
-
     for(int i=0;i<n;i++,cout<<endl)
         for(int j=0;j<=k;j++)   
             cout<<st[i][j]<<" ";
