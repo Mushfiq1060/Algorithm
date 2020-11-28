@@ -1,6 +1,6 @@
 /**Using Segment Tree**/
 /**LCA of node u,v is the minimum height node from root in simple path from u to v**/
-/**Time Complexity -> DFS takes O(node+edge) then build segment tree need O(nlog(n)) and then per query need O(log(n)) and n is size of the euler**/
+/**Time Complexity -> DFS takes O(node+edge) then build segment tree need O(nlog(n)) and then per query need O(log(n)) and n is size of the euler array**/
 
 #include<bits/stdc++.h>
 #define ll long long 
