@@ -86,7 +86,7 @@ mouse
 moneypot
 monitor
 mousepad
-mouse
+mouse -->search word
 
 m-> mobile,moneypot,monitor
 mo-> mobile,moneypot,monitor
