@@ -24,7 +24,6 @@ bool func(int len)
         mp[hash]=1;
     }
     hash=0;
-    bool found=false;
     for(int i=0;i<len;i++)
         hash=((hash*base)%mod+(s2[i]-'a'+1))%mod;
     if(mp.count(hash))
