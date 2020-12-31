@@ -67,6 +67,6 @@ int main()
         else   
             cout<<"Not found in Dictionary"<<endl;
     }
-    del(root);
+    del(root); ///it is deleted the child of root not deleted root
     return 0;
 }
