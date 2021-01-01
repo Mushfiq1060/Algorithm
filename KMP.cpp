@@ -26,7 +26,7 @@ int main()
             {
                 if(j==0)
                 {
-                    lps[i]=(pattern[i]==pattern[j]);
+                    lps[i]=(pattern[i]==pattern[j]); //// it will be written as lps[i]=0
                     i++;
                     break;
                 }
