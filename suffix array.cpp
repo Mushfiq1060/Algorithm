@@ -4,29 +4,29 @@ using namespace std;
 const int mxn=1e5+10;
 char str[mxn];
 int s0[(mxn / 3) + 10], sa0[(mxn / 3) + 10];
-int l, _rank[mxn], sa[mxn], lcp[mxn], bucket[mxn], mem[mxn << 2];
+int len, _rank[mxn], sa[mxn], lcp[mxn], bucket[mxn], mem[mxn << 2];
 
-void radixsort(int* source, int* dest, int* val, int l, int lim)
+void radixsort(int* source, int* dest, int* val, int len, int lim)
 { 
     int i, s = 0, x;
     memset(bucket, 0, lim << 2);
-    for (i = 0; i < l; i++) bucket[val[source[i]]]++;
+    for (i = 0; i < len; i++) bucket[val[source[i]]]++;
 
     for (i = 0; i < lim; i++){
         x = bucket[i];
         bucket[i] = s, s += x;
     }
-    for (i = 0; i < l; i++) dest[bucket[val[source[i]]]++] = source[i];
+    for (i = 0; i < len; i++) dest[bucket[val[source[i]]]++] = source[i];
 }
 
-void DC3(int* _rank, int* sa, int l, int lim, int ptr)
+void DC3(int* _rank, int* sa, int len, int lim, int ptr)
 { 
     int *s12, *sa12;
-    int allc = (l / 3) << 1, n0 = (l + 2) / 3;
+    int allc = (len / 3) << 1, n0 = (len + 2) / 3;
     int i, j, k, l, c, d, p, t, m, r, counter;
     s12 = &mem[ptr], ptr += (allc + 5), sa12 = &mem[ptr], ptr += (allc + 5);
 
-    c = 0, m = 0, r = l + ((l % 3) == 1);
+    c = 0, m = 0, r = len + ((len % 3) == 1);
     for (i = 0; i < r; i++, m++){
         if (m == 3) m = 0;
         if (m) s12[c++] = i;
@@ -58,7 +58,7 @@ void DC3(int* _rank, int* sa, int l, int lim, int ptr)
         if (sa12[i] < n0) s0[d++] = (sa12[i] * 3);
     }
     radixsort(s0, sa0, _rank, d, lim + 1);
-    for (k = 0, l = ((l % 3) == 1), r = 0; r < l; r++){
+    for (k = 0, l = ((len % 3) == 1), r = 0; r < len; r++){
         j = sa0[k];
         i = ((sa12[l] < n0) ? (sa12[l] * 3) + 1 : ((sa12[l] - n0) * 3) + 2);
         if (l == c) sa[r] = sa0[k++];
@@ -79,13 +79,13 @@ void DC3(int* _rank, int* sa, int l, int lim, int ptr)
 void LcpArray()
 { 
     int i, j, k;
-    for (i = 0; i < l; i++) _rank[sa[i]] = i;
+    for (i = 0; i < len; i++) _rank[sa[i]] = i;
 
-    for (k = 0, i = 0; i < l; i++, k?k--:0){
-        if (_rank[i] == (l - 1)) k = 0;
+    for (k = 0, i = 0; i < len; i++, k?k--:0){
+        if (_rank[i] == (len - 1)) k = 0;
         else{
             j = sa[_rank[i] + 1];
-            while(((i + k) < l) && ((j + k) < l) && (str[i + k] == str[j + k])) k++;
+            while(((i + k) < len) && ((j + k) < len) && (str[i + k] == str[j + k])) k++;
         }
         lcp[_rank[i]] = k;
     }
@@ -94,28 +94,28 @@ void LcpArray()
 void Generate()
 {
     int i, j, lim = 0;
-    for (i = 0; i < l; i++){
+    for (i = 0; i < len; i++){
         _rank[i] = str[i];
         if (_rank[i] > lim) lim = _rank[i];
     }
 
-    _rank[l] = _rank[l + 1] = _rank[l + 2] = 0;
-    DC3(_rank, sa, l, lim, 0);
+    _rank[len] = _rank[len + 1] = _rank[len + 2] = 0;
+    DC3(_rank, sa, len, lim, 0);
 }
 
 int main()
 {
     scanf("%s", str);
-    l = strlen(str);
+    len = strlen(str);
     Generate();
     LcpArray();
-    for(int i=0;i<l;i++)
+    for(int i=0;i<len;i++)
         cout<<sa[i]<<" ";
     cout<<endl;
-    for(int i=0;i<l;i++)
+    for(int i=0;i<len;i++)
         cout<<lcp[i]<<" ";
     cout<<endl;
-    for(int i=0;i<l;i++)
+    for(int i=0;i<len;i++)
         cout<<_rank[i]<<" ";
     cout<<endl;
     return 0;
