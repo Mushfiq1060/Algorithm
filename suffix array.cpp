@@ -89,6 +89,13 @@ void LcpArray()
         }
         lcp[_rank[i]] = k;
     }
+    int prev=0,temp=0;
+    for(int i=0;i<len;i++)
+    {
+        temp=lcp[i];
+        lcp[i]=prev;
+        prev=temp;
+    }
 }
 
 void Generate()
@@ -148,8 +155,8 @@ After lexicographically sorting suffix :
 here, suffix array is sa[]={1,2,4,0,3,5}
 
 lcp is stand for longest common prefix of 2 suffix.
-lcp[i] means longest common prefix of suffix i and suffix (i+1).
+lcp[i] means longest common prefix of suffix i and suffix (i-1).
 
-here lcp array is lcp[]={1,1,0,2,0,0}
+here lcp array is lcp[]={0,1,1,0,2,0}
 
 **/
