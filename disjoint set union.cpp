@@ -20,15 +20,10 @@ public:
         int x=_find(u),y=_find(v);
         if(x==y)
             return;
-        else if(_rank[x]>_rank[y])
+        else if(_rank[x]>=_rank[y])
             parent[y]=x,_rank[x]+=_rank[y]+1;
         else if(_rank[x]<_rank[y])
             parent[x]=y,_rank[y]+=_rank[x]+1;
-        else
-        {
-            parent[y]=x;
-            _rank[x]++;
-        }
     }
 };
 int main()
