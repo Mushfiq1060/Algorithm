@@ -6,6 +6,12 @@ int arr[mxn];
 struct info
 {
     ll sum,pref,suff,ans;
+    /*
+        sum = all node sum under subtree
+        pref = best prefix under subtree
+        suff = best suffix under subtree
+        ans = best answer in the current node
+    */
 }tree[4*mxn];
 void func(int idx)
 {
