@@ -1,0 +1,8 @@
+1. Bezouts identity -> Let a and b be integers with greatest common divisor d. 
+   Then there exist integers x and y such that ax + by = d. More generally, the 
+   integers of the form ax + by are exactly the multiples of d. If ax+by+cz......+nk=d
+   then we can write that gcd(a,b,c,.....,k)=d.
+
+
+
+
