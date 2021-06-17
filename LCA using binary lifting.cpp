@@ -36,6 +36,14 @@ int LCAquery(int u,int v)
             u=par[u][i],v=par[v][i];
     return p[u];
 }
+int kth_parent(int u,int k) ///find k'th parent of node u
+{
+    int dist=depth[u]-k;
+    for(int i=17;i>=0;i--)
+        if(par[u][i]!=-1 && depth[par[u][i]]>=dist)
+            u=par[u][i];
+    return u;
+}
 int main()
 {
     scanf("%d",&node);
