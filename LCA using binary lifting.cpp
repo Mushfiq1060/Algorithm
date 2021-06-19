@@ -54,7 +54,7 @@ int main()
         tree[u].push_back(v);
         tree[v].push_back(u);
     }
-    dfs(1,0,0);
+    dfs(1,-1,0);/// root node parent should be -1
     LCAinit();
     int q;
     scanf("%d",&q);
