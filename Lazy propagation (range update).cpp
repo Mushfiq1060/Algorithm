@@ -1,82 +1,85 @@
 #include<bits/stdc++.h>
-#define _size 100100
-#define ll long long
+#define ll long long 
 using namespace std;
+const int mxn=2e5+10;
+ll arr[mxn];
 struct info
 {
-    ll val,prop;
-};
-info tree[4*_size];
-ll arr[_size];
-void build_tree(ll left,ll right,ll idx)
+    ll val,prop=0;
+}tree[4*mxn];
+inline void push(int l,int r,int idx)
+{
+    tree[idx].val+=(r-l+1)*tree[idx].prop;
+    if(l!=r)
+    {
+        tree[2*idx+1].prop+=tree[idx].prop; 
+        tree[2*idx+2].prop+=tree[idx].prop;
+    }
+    tree[idx].prop=0;
+}
+void build(int left,int right,int idx)
 {
     if(left==right)
     {
         tree[idx].val=arr[left];
-        tree[idx].prop=0;
         return ;
     }
-    ll mid=(left+right)/2;
-    build_tree(left,mid,idx*2+1);
-    build_tree(mid+1,right,idx*2+2);
+    int mid=(left+right)/2;
+    build(left,mid,idx*2+1);
+    build(mid+1,right,idx*2+2);
     tree[idx].val=tree[idx*2+1].val+tree[idx*2+2].val;
-    tree[idx].prop=0;
 }
-void update(ll left,ll right,ll ql,ll qr,ll x,ll idx)
+void update(int left,int right,int idx,int ql,int qr,int x)
 {
-    if(qr<left || ql>right)
-        return;
-    else if(ql<=left && qr>=right)
+    if(tree[idx].prop!=0)
+        push(left,right,idx);//pushing propagrating value in child node and set propagating value 0 in current node
+    if(ql>right || qr<left)
+        return ;
+    if(ql<=left && qr>=right)
     {
-        tree[idx].val+=((right-left+1)*x);
-        tree[idx].prop+=x;
+        tree[idx].val+=(right-left+1)*x;
+        if(left!=right)
+        {
+            tree[idx*2+1].prop+=x;
+            tree[idx*2+2].prop+=x;
+        }
         return ;
     }
-    ll mid=(left+right)/2;
-    update(left,mid,ql,qr,x,idx*2+1);
-    update(mid+1,right,ql,qr,x,idx*2+2);
-    tree[idx].val=tree[idx*2+1].val+tree[idx*2+2].val+tree[idx].prop*(right-left+1);
+    int mid=(left+right)/2;
+    update(left,mid,idx*2+1,ql,qr,x);
+    update(mid+1,right,idx*2+2,ql,qr,x);
+    tree[idx].val=tree[idx*2+1].val+tree[idx*2+2].val;
 }
-ll Query(ll left,ll right,ll ql,ll qr,ll idx,ll carry)
+ll query(int left,int right,int idx,int ql,int qr)
 {
+    if(tree[idx].prop!=0)
+        push(left,right,idx);
     if(ql>right || qr<left)
         return 0;
-    else if(ql<=left && qr>=right)
-        return tree[idx].val+(right-left+1)*carry;
-    ll mid=(left+right)/2,p,q;
-    p=Query(left,mid,ql,qr,idx*2+1,carry+tree[idx].prop);
-    q=Query(mid+1,right,ql,qr,idx*2+2,carry+tree[idx].prop);
-    return p+q;
+    if(ql<=left && qr>=right)
+        return tree[idx].val;
+    int mid=(left+right)/2;
+    return query(left,mid,idx*2+1,ql,qr)+query(mid+1,right,idx*2+2,ql,qr);
 }
 int main()
 {
-    ll t,_case=0;
-    scanf("%lld",&t);
-    while(t--)
+    int n,q;
+    scanf("%d%d",&n,&q);
+    for(int i=0;i<n;i++)
+        scanf("%lld",arr+i);
+    build(0,n-1,0);
+    while(q--)
     {
-        ll n,q;
-        scanf("%lld %lld",&n,&q);
-        memset(arr,0,sizeof arr);
-        build_tree(0,n-1,0);
-        printf("Case %lld:\n",++_case);
-        while(q--)
+        int t,l,r;
+        scanf("%d%d%d",&t,&l,&r);
+        if(t==1)
         {
-            ll p;
-            scanf("%lld",&p);
-            if(p==0)
-            {
-                ll l,r,x;
-                scanf("%lld %lld %lld",&l,&r,&x); ///update range l to r with value x
-                update(0,n-1,l,r,x,0);
-            }
-            else
-            {
-                ll l,r,val;
-                scanf("%lld %lld",&l,&r);
-                val=Query(0,n-1,l,r,0,0);///sum range l to r
-                printf("%lld\n",val);
-            }
+            int x;
+            scanf("%d",&x);
+            update(0,n-1,0,l,r,x);
         }
+        else 
+            printf("%lld\n",query(0,n-1,0,l,r));
     }
-    return 0;
+    return 0; 
 }
