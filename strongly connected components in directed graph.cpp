@@ -1,5 +1,5 @@
 /**
-strongly connected components are used in directed graph
+strongly connected components are used in directed graph for detecting cycle**/
 **/
 
 #include<bits/stdc++.h>
