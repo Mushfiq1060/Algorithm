@@ -2,7 +2,7 @@
 #define inf 1000000
 using namespace std;
 vector<int>graph[1010],weight[1010];
-int dist[1010],node,edge;
+int dist[1010],vis[1010],node,edge;
 struct info
 {
      int u,v;
@@ -20,11 +20,15 @@ void dijkstra(int src)
     dist[src]=0;
     priority_queue<info>qu;
     qu.push(info(src,0));
+    vis[src]=1;
     while(!qu.empty())
     {
         info x=qu.top();
         qu.pop();
         int y=x.u;
+        if(vis[y])
+             continue;
+        vis[y]=1;
         for(int i=0;i<graph[y].size();i++)
         {
             int p=graph[y][i];
@@ -51,6 +55,7 @@ int main()
         weight[u].push_back(w);
         weight[v].push_back(w);
     }
+    memset(vis,0,sizeof vis);
     dijkstra(node);
     return 0;
 }
