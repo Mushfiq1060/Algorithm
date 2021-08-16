@@ -1,70 +1,69 @@
-///Directed graph
-
 #include<bits/stdc++.h>
+#define ll long long 
 using namespace std;
-vector<int>graph[1010];
-int vis[1010],n,parent[1010],val;
+const int mxn=1e5+10;
+vector<int>adj[mxn];
+int vis[mxn],par[mxn],node;
 bool flag;
-void dfs(int node)
+void dfs(int src)
 {
-    vis[node]=0;
-    for(int i=0;i<graph[node].size();i++)
+  vis[src]=0;
+  for(int i=0;i<adj[src].size();i++)
+  {
+    if(vis[adj[src][i]]==-1)
     {
-        if(vis[graph[node][i]]==-1)
-        {
-            parent[graph[node][i]]=node;
-            dfs(graph[node][i]);
-        }
-        else if(vis[graph[node][i]]==0)
-        {
-            flag=true;
-            parent[graph[node][i]]=node;
-            val=node;
-        }
+      if(!flag)
+        par[src]=adj[src][i];
+      dfs(adj[src][i]);
     }
-    vis[node]=1;
+    else if(vis[adj[src][i]]==0)
+    {
+      if(!flag)
+      {
+        flag=true;
+        node=adj[src][i];
+        par[src]=adj[src][i];
+      }
+    }
+  }
+  vis[src]=1;
 }
 int main()
 {
-    int node,edge;
-    cin>>node>>edge;
-    n=node;
-    for(int i=0;i<edge;i++)
+  int n,m;
+  cin>>n>>m;
+  for(int i=0;i<m;i++)
+  {
+    int u,v;
+    cin>>u>>v;
+    adj[u].push_back(v);
+  } 
+  memset(vis,-1,sizeof vis);
+  for(int i=1;i<=n;i++)
+  { 
+    if(vis[i]==-1)
     {
-        int u,v;
-        cin>>u>>v;
-        graph[u].push_back(v);
-    }
-    memset(vis,-1,sizeof vis);
-    for(int i=1;i<=node;i++)
-        if(vis[i]==-1)
+      flag=false;
+      dfs(i);
+      if(flag)
+      {
+        int xd=node;
+        vector<int>res;
+        res.push_back(xd);
+        while(par[node]!=xd)
         {
-            flag=false;
-            dfs(i);
-            if(flag)
-            {
-                int xd=val;
-                cout<<"YES"<<endl;
-                cout<<val<<" ";
-                while(parent[val]!=xd)
-                {
-                    cout<<parent[val]<<" ";
-                    val=parent[val];
-                }
-                return 0;
-            }
+          res.push_back(par[node]);
+          node=par[node];
         }
-    cout<<"NO"<<endl;
-    return 0;
+        res.push_back(xd);
+        cout<<res.size()<<endl;
+        for(int i=0;i<res.size();i++)
+          cout<<res[i]<<" ";
+        cout<<endl;
+        return 0;
+      }
+    }
+  } 
+  cout<<"IMPOSSIBLE"<<endl;
+  return 0;
 }
-/**
-8 8
-1 2
-2 3
-3 7
-3 8
-3 4
-5 4
-4 6
-8 1
-**/
