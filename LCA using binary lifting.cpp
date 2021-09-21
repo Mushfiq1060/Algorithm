@@ -2,18 +2,21 @@
 #define ll long long 
 using namespace std;
 const int mxn=1e5+10;
-int node,depth[mxn],par[mxn][18];
+int node,depth[mxn],p[mxn],par[mxn][18];
 vector<int>tree[mxn];
 void dfs(int src,int parent,int lev)
 {
     depth[src]=lev;
-    par[src][0]=parent;
+    p[src]=parent;
     for(int i=0;i<tree[src].size();i++)
         if(tree[src][i]!=parent)
             dfs(tree[src][i],src,lev+1);
 }
 void LCAinit()
 {
+    memset(par,-1,sizeof par);
+    for(int i=1;i<=node;i++)
+        par[i][0]=p[i];
     for(int k=1;k<=17;k++)  
         for(int i=1;i<=node;i++)
             if(par[i][k-1]!=-1)
@@ -31,7 +34,7 @@ int LCAquery(int u,int v)
     for(int i=17;i>=0;i--)
         if(par[u][i]!=-1 && par[u][i]!=par[v][i])
             u=par[u][i],v=par[v][i];
-    return par[u][0];
+    return p[u];
 }
 int kth_parent(int u,int k) ///find k'th parent of node u
 {
@@ -43,7 +46,6 @@ int kth_parent(int u,int k) ///find k'th parent of node u
 }
 int main()
 {
-    memset(par,-1,sizeof par);
     scanf("%d",&node);
     for(int i=0;i<node-1;i++)
     {
