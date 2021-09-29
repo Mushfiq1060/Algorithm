@@ -32,7 +32,7 @@ int main()
 
   ///build prefix hash
   pref[0]=str[0]-'a'+1;
-  for(int i=0;i<n;i++)
+  for(int i=1;i<n;i++)
     pref[i]=add((str[i]-'a'+1),mul(pref[i-1],base));
 
   ///get substring hash value in order 1
@@ -50,7 +50,7 @@ int main()
 }
 /*
 
-  str = yarqs , p=base
+  str = "yarqs" , p=base
 
   suffix hash array:
 
