@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 #define ll long long 
 using namespace std;
-const int mxn=1e5+10,mod=1e9+7,base=31;
+const int mxn=1e5+10,mod=1000004119,base=31;
 int n,pwr[mxn],pref[mxn],suff[mxn]; // pref -> prefix hash , suff -> suffix hash
 inline int add(int val1,int val2)
 {
