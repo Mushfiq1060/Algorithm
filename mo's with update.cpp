@@ -4,7 +4,7 @@
 #define ll long long 
 using namespace std;
 const int mxn=1e5+10;
-int n,q,a[mxn],len,_time,l,r;
+int n,q,a[mxn],len,_time,l,r,len=2500;
 ll res=0,ans[mxn];
 unordered_map<int,int>mp;
 struct info
@@ -77,7 +77,6 @@ int main()
       Q[nq]={l,r,nq,nu};
     }
   }
-  len=sqrt(n)+10;
   sort(Q+1,Q+nq+1,cmp);
   _time=nu,l=1,r=0;
   for(int i=1;i<=nq;i++)
