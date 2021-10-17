@@ -69,9 +69,9 @@ int main()
                 yarqs = y*p^4 + a*p^3 + r*p^2 + q*p^1 + s*p^0
 
 
-  gethash(l,r) => suff[l]-(suff[r+1]*pwr[r-l+1]) -> (r>l)
+  gethash(l,r) => suff[l]-(suff[r+1]*pwr[r-l+1]) -> (r>l) -> finding forward hash
 
-  gethash(r,l) => pref[r]-(pref[l-1]*pwr[r-l+1]) -> (r>l)
+  gethash(r,l) => pref[r]-(pref[l-1]*pwr[r-l+1]) -> (r>l) -> finding reverse hash
 
 
 */
