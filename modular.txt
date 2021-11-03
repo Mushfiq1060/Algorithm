@@ -1,0 +1,31 @@
+
+1.   x≡y(mod n) means rem(x,n)=rem(y,n) => x%n=y%n
+  => x-y=k*n here k is an integer...(x-y) is a multiple of n.
+
+2.   ax≡ay(mod n) here a is a common coefficient in both x & y
+  => x≡y(mod gcd(a,n))
+
+3. a≡b(mod n) & a≡c(mod n) then b≡c(mod n)
+   proof: 
+           a≡b(mod n)            b≡c(mod n)
+        => a-b=k*n -------(i)  => b-c=j*n --------(ii)
+        (ii)-(i)
+           b-c=(j-k)*n   -> here (b-c) is a multiple of n
+        => b≡c(mod n)
+
+4. a≡b(mod n) then gcd(a,n)=gcd(b,n)
+
+5. gcd(a,n)=1 & gcd(b,n)=1 then gcd(a*b,n)=1
+
+6. gcd(a,n)=1 then gcd(a+k*n,n)=1
+   proof:
+          imagine, gcd(a+k*n,n)!=1 then there should be a prime factor 'r' that divides both
+          a+k*n & n
+
+          so, (a+k*n)/r is an integer
+           => (a/r)+(k*n)/r
+          here (k*n)/r is an integer because r is present in prime factorization of n so k*n is 
+          some mutiple of r but a/r is not an integer because a and n have not any common prime
+          factor.
+          Though (a+k*n)/r is not an integer so gcd(a+k*n,n)=1
+
