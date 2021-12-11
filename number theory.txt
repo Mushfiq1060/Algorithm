@@ -37,3 +37,5 @@
   => If we add 'k' in every element of the array then we can write
     gcd(a[0]+k,a[1]+k,a[2]+k,......,a[n]+k)=gcd(a[0]+k,a[1]-a[0],a[2]-a[1],.......,a[n]-a[n-1]);
     Here it is clear that we need to add 'k' with the first value of this array.
+    
+10. gcd(a,b)=x then we can write, a=c*x & b=d*x  here, gcd(c,d)=1
