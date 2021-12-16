@@ -19,7 +19,7 @@ void func(int idx)
     tree[idx].sum=tree[l].sum+tree[r].sum;
     tree[idx].pref=max(tree[l].pref,tree[l].sum+tree[r].pref);
     tree[idx].suff=max(tree[r].suff,tree[r].sum+tree[l].suff);
-    tree[idx].ans=max({tree[l].ans,tree[r].ans,tree[l].suff+tree[r].pref});//left part ans,right part ans & overlaping part ans
+    tree[idx].ans=max({tree[l].sum+tree[r].sum,tree[l].ans,tree[r].ans,tree[l].suff+tree[r].pref});//left part ans,right part ans & overlaping part ans
 }
 void build(int left,int right,int idx)
 {
