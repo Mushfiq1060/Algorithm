@@ -20,7 +20,6 @@ void dijkstra(int src)
     dist[src]=0;
     priority_queue<info>qu;
     qu.push(info(src,0));
-    vis[src]=1;
     while(!qu.empty())
     {
         info x=qu.top();
