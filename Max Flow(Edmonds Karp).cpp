@@ -15,8 +15,8 @@ namespace EdmondsKarp
   void initialize(int sz)
   {
     n=sz;
-    g=vector<vector<int>>(n+5);
-    cap=vector<vector<int>>(n+5,vector<int>(n+5));
+    g=vector<vector<int>>(n);
+    cap=vector<vector<int>>(n,vector<int>(n));
   }
   void addEdge(int u,int v,int w)
   {
@@ -78,7 +78,7 @@ int main()
   while(_t--){
     int n,s,t,c;
     cin>>n>>s>>t>>c; /// n=number of node,s=source,t=sink,c=number of edge
-    EdmondsKarp::initialize(n);
+    EdmondsKarp::initialize(n+5);
     for(int i=0;i<c;i++){
       int u,v,w;
       cin>>u>>v>>w;
