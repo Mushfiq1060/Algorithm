@@ -1,3 +1,8 @@
+/*
+  Bipartite Matching(Kuhn algorithm)
+  Time complexity : O(N*(V+E)) 
+  N is set 1 node number, V is set 2 node number & E is number of edge
+*/
 #include<bits/stdc++.h>
 #define ll long long 
 using namespace std;
