@@ -21,7 +21,7 @@ namespace HopcroftKarp
   }
   void addEdge(int u,int v)
   {
-    g[u].push_back(v+n); // set is mapped with (value(v)+set1 size(n))
+    g[u].push_back(v+n); // set2 is mapped with (value(v)+set1 size(n))
   }
   bool BFS()
   {
