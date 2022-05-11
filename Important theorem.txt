@@ -8,6 +8,8 @@
 
 3. a+b = (a|b) + (a&b)
 
-4. 2*(sum of x contiguous element)%x==0
+4. a|b = (a^b) + (a&b)
+
+5. 2*(sum of x contiguous element)%x==0
 
 
