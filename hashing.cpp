@@ -1,50 +1,79 @@
 #include<bits/stdc++.h>
 #define ll long long 
 using namespace std;
-const int mxn=1e5+10,mod=1000004119,base=31;
-int n,pwr[mxn],pref[mxn],suff[mxn]; // pref -> prefix hash , suff -> suffix hash
-inline int add(int val1,int val2)
-{
-  if(val1<0) val1+=mod; 
-  if(val2<0) val2+=mod; 
-  if(val1+val2>=mod) return val1+val2-mod;
-  return val1+val2;
-}
-inline int mul(int val1,int val2)
-{
-  if(val1<0) val1+=mod;
-  if(val2<0) val2+=mod;
-  return ((ll)((ll)val1*(ll)val2))%mod;
-}
+class Hash {
+  int n, base = 31, mod = 1000004119;
+  string s;
+  vector<int> pwr, pref, suff;
+  inline int add(int val1, int val2) {
+    if(val1 < 0) {
+      val1 += mod;
+    } 
+    if(val2 < 0) {
+      val2 += mod;
+    } 
+    if(val1 + val2 >= mod) {
+      return val1 + val2 - mod;
+    }
+    return val1 + val2;
+  }
+  inline int mul(int val1, int val2) {
+    if(val1 < 0) {
+      val1 += mod;
+    }
+    if(val2 < 0) {
+      val2 += mod;
+    }
+    return ((ll)((ll)val1 * (ll)val2)) % mod;
+  }
+  inline void buildPowerArray() {
+    pwr.push_back(1);
+    for (int i = 0; i <= n; i++) {
+      pwr.push_back(mul(pwr.back(), base));
+    }
+  }
+  inline void buildPrefixArray() {
+    pref.push_back(s[0] - 'a' + 1);
+    for (int i = 1; i < n; i++) {
+      pref.push_back(add((s[i] - 'a' + 1), mul(pref.back(), base)));
+    }
+  }
+  inline void buildSuffixArray() {
+    suff.resize(n + 1, 0);
+    for(int i = n - 1; i >= 0; i--) {
+      suff[i] = add((s[i] - 'a' + 1), mul(suff[i + 1], base));   
+    }
+  }
+
+public:
+  Hash(string s) {
+    this->s = s;
+    n = s.size();
+    buildPowerArray();
+    buildPrefixArray();
+    buildSuffixArray();
+  }
+  int getForwardHash(int l, int r) {
+    // by using suffix hash we can get hash value of substring(l -> r)
+    return add(suff[l] - mul(suff[r + 1], pwr[r - l + 1]), mod);
+  }
+  int getReverseHash(int l, int r) {
+    // by using prefix hash we can get hash value of substring(r -> l)
+    return add(pref[r] - mul((l != 0 ? pref[l - 1] : 0), pwr[r - l + 1]), mod);
+  }
+};
 int main()
 {
   string str;
   cin>>str;
-  n=str.size();
-  pwr[0]=1;
-  for(int i=1;i<=n;i++)
-    pwr[i]=mul(pwr[i-1],base);
-
-  ////build suffix hash 
-  suff[n]=0;
-  for(int i=n-1;i>=0;i--)
-    suff[i]=add((str[i]-'a'+1),mul(suff[i+1],base));
-
-  ///build prefix hash
-  pref[0]=str[0]-'a'+1;
-  for(int i=1;i<n;i++)
-    pref[i]=add((str[i]-'a'+1),mul(pref[i-1],base));
-
-  ///get substring hash value in order 1
+  Hash obj = Hash(str);
   int q;
   cin>>q;
-  while(q--)
-  {
-    int l,r;
-    cin>>l>>r;
-    int hash=add(suff[l]-mul(suff[r+1],pwr[r-l+1]),mod); ///by using suffix hash we can get hash value of substring(l -> r)
-    
-    hash=add(pref[r]-mul((l!=0?pref[l-1]:0),pwr[r-l+1]),mod); ///by using prefix hash we can get hash value of substring(r -> l)
+  while (q--) {
+    int l, r;
+    cin >> l >> r;
+    cout << obj.getForwardHash(l, r) << endl;
+    cout << obj.getReverseHash(l, r) << endl;
   }
   return 0;
 }
@@ -72,6 +101,5 @@ int main()
   gethash(l,r) => suff[l]-(suff[r+1]*pwr[r-l+1]) -> (r>l) -> finding forward hash
 
   gethash(r,l) => pref[r]-(pref[l-1]*pwr[r-l+1]) -> (r>l) -> finding reverse hash
-
 
 */
